@@ -48,13 +48,14 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="CreateClient"
         component={CreateClientScreen}
-        options={{ drawerItemStyle: { display: 'none' }, title: 'Novo Cliente' }}
+        options={{ title: 'Novo Cliente' }}
       />
       <Drawer.Screen
         name="EditClient"
         component={EditClientScreen}
-        options={{ drawerItemStyle: { display: 'none' }, title: 'Editar Cliente' }}
+        options={{ title: 'Editar Cliente' }}
       />
+   
     </Drawer.Navigator>
   );
 };

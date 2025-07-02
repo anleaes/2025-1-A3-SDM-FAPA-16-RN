@@ -1,36 +1,34 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
-import { useFocusEffect } from 'expo-router';
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { DrawerParamList } from '../../navigation/DrawerNavigator';
 
-type Props = DrawerScreenProps<DrawerParamList, 'CreateClient'>;
+type Props = DrawerScreenProps<DrawerParamList, 'EditClient'>;
 
-const CreateClientScreen = ({ navigation }: Props) => {
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [cnh, setCnh] = useState('');
+const EditClientScreen = ({ route, navigation }: Props) => {
+  const { client } = route.params;
+  const [nome, setNome] = useState(client.nome);
+  const [cpf, setCpf] = useState(client.cpf);
+  const [cnh, setCnh] = useState(client.cnh);
   const [saving, setSaving] = useState(false);
 
-  useFocusEffect(
-    useCallback(() => {
-      setNome('');
-      setCpf('');
-      setCnh('');
-    }, [])
-  );
+  useEffect(() => {
+    setNome(client.nome);
+    setCpf(client.cpf);
+    setCnh(client.cnh);
+  }, [client]);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      await fetch('http://localhost:8000/clientes/', {
-        method: 'POST',
+      await fetch(`http://127.0.0.1:8000/clientes/${client.id}/`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, cpf, cnh }),
       });
       navigation.navigate('ClientList');
     } catch (error) {
-      console.error('Error saving client:', error);
+      console.error('Error updating client:', error);
     } finally {
       setSaving(false);
     }
@@ -38,7 +36,7 @@ const CreateClientScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Novo Cliente</Text>
+      <Text style={styles.title}>Editar Cliente</Text>
       
       <Text style={styles.label}>Nome</Text>
       <TextInput
@@ -102,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateClientScreen;
+export default EditClientScreen;

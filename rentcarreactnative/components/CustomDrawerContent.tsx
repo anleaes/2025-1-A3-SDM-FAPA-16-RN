@@ -2,16 +2,29 @@ import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawe
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+// const CustomDrawerContent = (props: any) => {
+//   return (
+//     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
+//       <View style={styles.header}>
+//         <Text style={styles.title}>Aluguel de Carros</Text>
+//       </View>
+//       <View style={{ flex: 1, paddingTop: 10 }}>
+//         <DrawerItemList {...props} />
+//       </View>
+//     </DrawerContentScrollView>
+//   );
+// };
+
 const CustomDrawerContent = (props: any) => {
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
+    <View>
       <View style={styles.header}>
         <Text style={styles.title}>Aluguel de Carros</Text>
       </View>
-      <View style={{ flex: 1, paddingTop: 10 }}>
+      <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-      </View>
-    </DrawerContentScrollView>
+      </DrawerContentScrollView>
+    </View>
   );
 };
 
